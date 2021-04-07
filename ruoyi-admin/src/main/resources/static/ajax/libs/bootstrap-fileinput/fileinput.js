@@ -6036,7 +6036,7 @@
             close: 'Close detailed preview'
         }
     };
-    
+
     $.fn.fileinputLocales.zh = {
         fileSingle: '文件',
         filePlural: '个文件',
@@ -6102,7 +6102,7 @@
         msgAjaxError: '{operation} 发生错误. 请重试!',
         msgAjaxProgressError: '{operation} 失败',
         msgDuplicateFile: 'File "{name}" of same size "{size} KB" has already been selected earlier. Skipping duplicate selection.',
-        msgResumableUploadRetriesExceeded:  'Upload aborted beyond <b>{max}</b> retries for file <b>{file}</b>! Error Details: <pre>{error}</pre>',
+        msgResumableUploadRetriesExceeded: 'Upload aborted beyond <b>{max}</b> retries for file <b>{file}</b>! Error Details: <pre>{error}</pre>',
         msgPendingTime: '{time} remaining',
         msgCalculatingTime: 'calculating time remaining',
         ajaxOperations: {
@@ -6124,7 +6124,7 @@
             indicatorSuccessTitle: '上传',
             indicatorErrorTitle: '上传错误',
             indicatorPausedTitle: 'Upload Paused',
-            indicatorLoadingTitle:  '上传 &hellip;'
+            indicatorLoadingTitle: '上传 &hellip;'
         },
         previewZoomButtonTitles: {
             prev: '预览上一个文件',
@@ -6135,7 +6135,7 @@
             close: '关闭当前预览'
         }
     };
-    
+
     $.fn.fileinput.Constructor = FileInput;
 
     /**

@@ -26,12 +26,11 @@ import java.util.List;
 
 /**
  * 首页 业务处理
- * 
+ *
  * @author ruoyi
  */
 @Controller
-public class SysIndexController extends BaseController
-{
+public class SysIndexController extends BaseController {
     @Autowired
     private ISysMenuService menuService;
 
@@ -43,8 +42,7 @@ public class SysIndexController extends BaseController
 
     // 系统首页
     @GetMapping("/index")
-    public String index(ModelMap mmap)
-    {
+    public String index(ModelMap mmap) {
         // 取身份信息
         SysUser user = ShiroUtils.getSysUser();
         // 根据用户id取出菜单
@@ -66,10 +64,8 @@ public class SysIndexController extends BaseController
 
         // 优先Cookie配置导航菜单
         Cookie[] cookies = ServletUtils.getRequest().getCookies();
-        for (Cookie cookie : cookies)
-        {
-            if (StringUtils.isNotEmpty(cookie.getName()) && "nav-style".equalsIgnoreCase(cookie.getName()))
-            {
+        for (Cookie cookie : cookies) {
+            if (StringUtils.isNotEmpty(cookie.getName()) && "nav-style".equalsIgnoreCase(cookie.getName())) {
                 indexStyle = cookie.getValue();
                 break;
             }
@@ -80,8 +76,7 @@ public class SysIndexController extends BaseController
 
     // 锁定屏幕
     @GetMapping("/lockscreen")
-    public String lockscreen(ModelMap mmap)
-    {
+    public String lockscreen(ModelMap mmap) {
         mmap.put("user", ShiroUtils.getSysUser());
         ServletUtils.getSession().setAttribute(ShiroConstants.LOCK_SCREEN, true);
         return "lock";
@@ -90,15 +85,12 @@ public class SysIndexController extends BaseController
     // 解锁屏幕
     @PostMapping("/unlockscreen")
     @ResponseBody
-    public AjaxResult unlockscreen(String password)
-    {
+    public AjaxResult unlockscreen(String password) {
         SysUser user = ShiroUtils.getSysUser();
-        if (StringUtils.isNull(user))
-        {
+        if (StringUtils.isNull(user)) {
             return AjaxResult.error("服务器超时，请重新登陆");
         }
-        if (passwordService.matches(user, password))
-        {
+        if (passwordService.matches(user, password)) {
             ServletUtils.getSession().removeAttribute(ShiroConstants.LOCK_SCREEN);
             return AjaxResult.success();
         }
@@ -107,41 +99,34 @@ public class SysIndexController extends BaseController
 
     // 切换主题
     @GetMapping("/system/switchSkin")
-    public String switchSkin()
-    {
+    public String switchSkin() {
         return "skin";
     }
 
     // 切换菜单
     @GetMapping("/system/menuStyle/{style}")
-    public void menuStyle(@PathVariable String style, HttpServletResponse response)
-    {
+    public void menuStyle(@PathVariable String style, HttpServletResponse response) {
         CookieUtils.setCookie(response, "nav-style", style);
     }
 
     // 系统介绍
     @GetMapping("/system/main")
-    public String main(ModelMap mmap)
-    {
+    public String main(ModelMap mmap) {
         mmap.put("version", RuoYiConfig.getVersion());
         return "main";
     }
 
     // 检查初始密码是否提醒修改
-    public boolean initPasswordIsModify(Date pwdUpdateDate)
-    {
+    public boolean initPasswordIsModify(Date pwdUpdateDate) {
         Integer initPasswordModify = Convert.toInt(configService.selectConfigByKey("sys.account.initPasswordModify"));
         return initPasswordModify != null && initPasswordModify == 1 && pwdUpdateDate == null;
     }
 
     // 检查密码是否过期
-    public boolean passwordIsExpiration(Date pwdUpdateDate)
-    {
+    public boolean passwordIsExpiration(Date pwdUpdateDate) {
         Integer passwordValidateDays = Convert.toInt(configService.selectConfigByKey("sys.account.passwordValidateDays"));
-        if (passwordValidateDays != null && passwordValidateDays > 0)
-        {
-            if (StringUtils.isNull(pwdUpdateDate))
-            {
+        if (passwordValidateDays != null && passwordValidateDays > 0) {
+            if (StringUtils.isNull(pwdUpdateDate)) {
                 // 如果从未修改过初始密码，直接提醒过期
                 return true;
             }
